@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import { Inter } from "next/font/google";
+import { SplashScreen } from "@/components/ui/SplashScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
         className={`${inter.className} antialiased min-h-screen`}
       >
         <Providers>
+          <SplashScreen />
           {children}
         </Providers>
       </body>
