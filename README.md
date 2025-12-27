@@ -1,103 +1,109 @@
 # 📊 FinBoard: Customizable Finance Dashboard
 
-FinBoard is a powerful, real-time finance monitoring dashboard built with **Next.js 14**. It allows users to connect to any financial API, explore JSON responses dynamically, and build a personalized monitoring suite with customizable widgets.
+FinBoard is a high-performance, real-time finance monitoring dashboard built with **Next.js 14**. It empowers users to build their own monitoring suite by connecting to any financial API and visualizing data through dynamic, customizable widgets.
 
-## ✨ Features
+## 🔗 Project Links
+- **Live Demo**: [https://finboard-demo.vercel.app](https://finboard-demo.vercel.app) *(Replace with your actual Vercel link)*
+- **Video Walkthrough**: [https://vimeo.com/your-video](https://vimeo.com/your-video) *(Replace with your recording link)*
+
+---
+
+## ✨ Key Features
 
 - **🚀 Dynamic API Integration**: Connect to any REST API (Alpha Vantage, CoinGecko, Binance, etc.).
-- **🔍 JSON Explorer**: Interactive field selection—no more guessing JSON paths.
-- **📈 Advanced Visualization**: 
+- **🔍 JSON Explorer**: Interactive field selection—flatten complex JSON responses into searchable paths.
+- **📈 Comprehensive Widget Suite**: 
     - **Finance Cards**: Single-metric monitoring with custom formatting.
-    - **Tables**: Searchable, sortable, and paginated data grids.
-    - **Charts**: Responsive Area and Line charts with dynamic time-range switching (`24H`, `7D`, `30D`).
-- **🔗 Real-time Data**: Support for WebSocket streams (e.g., Binance Live Ticker) with automatic fallback.
+    - **Tables**: Searchable, sortable, and auto-discovering data grids.
+    - **Charts**: Responsive Area and Line charts with dynamic `{RANGE}` templates.
+- **🔗 Real-time Data**: Native WebSocket support for live ticker streams.
 - **🎛️ Dashboard Builder**: 
-    - **Drag-and-Drop**: Pixel-perfect layout control.
-    - **Live Editing**: Change URLs, intervals, and formats on the fly.
-    - **Templates**: Instant starter layouts for Crypto and Stocks.
-- **🌓 Modern UI/UX**: 
-    - Beautiful **Dark/Light** mode.
-    - Glassmorphism design aesthetics.
-    - Skeleton loaders and error boundaries for a robust experience.
-- **💾 Data Persistence**: Full dashboard state saved to local storage. Import/Export support for configuration backups.
+    - **Drag-and-Drop**: Pixel-perfect layout reorganization.
+    - **Live Configuration**: Edit titles, endpoints, and formats without refreshing.
+    - **Templates**: Quick-start templates for Crypto and Blue-Chip stocks.
+- **🌓 Premium UI/UX**: Dark/Light mode switching with an emerald-green professional aesthetic.
+- **💾 Data Persistence**: LocalStorage sync ensures your dashboard survives browser restarts.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, Server-side Rendering)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Data Fetching**: [TanStack Query v5](https://tanstack.com/query)
-- **Layout Engine**: [DND Kit](https://dndkit.com/) / [React Grid Layout](https://github.com/react-grid-layout/react-grid-layout)
-- **Charts**: [Recharts](https://recharts.org/)
-- **Icons**: [Lucide React](https://lucide.dev/)
+- **Frontend**: Next.js 14 (App Router), React 18
+- **Styling**: Tailwind CSS, Lucide Icons
+- **State Management**: Zustand (Persist Middleware)
+- **Data Fetching**: TanStack Query v5 (Auto-caching & Refetching)
+- **Layout**: DND Kit / React Grid Layout
+- **Visualization**: Recharts
+- **Deployment**: Vercel
 
 ---
 
-## 🚀 Getting Started
+## 🏗️ Architecture
+
+### Data Flow Diagram
+```mermaid
+graph TD
+    A[User Interface] --> B[Zustand Store]
+    B --> C[Widget Manager]
+    C --> D[useWidgetData Hook]
+    D --> E[TanStack Query]
+    E --> F[External APIs]
+    F --> E
+    E --> G[JSON Utils - Flattening]
+    G --> B
+    C --> H[useWebSocket Hook]
+    H --> I[Live WebSocket Streams]
+```
+
+### Component Breakdown
+- **Widget System**: A modular wrapper (`WidgetCard`) that delegates rendering to specialized components (`CardWidget`, `TableWidget`, `ChartWidget`) based on user selection.
+- **API Integration**: A centralized `lib/api.ts` handler that manages fetch requests, coupled with a recursive `flattenObject` utility for dynamic mapping.
+- **State Management**: Zustand handles the global list of widgets, theme, and edit-mode states, persisting strictly necessary configuration to LocalStorage.
+
+---
+
+## 🚀 Setup Instructions
 
 ### Prerequisites
-
-- Node.js 18.x or higher
-- npm or yarn
+- Node.js 18.x+
+- npm
 
 ### Installation
-
-1. **Clone the repository**:
+1. **Clone the repo**:
    ```bash
-   git clone https://github.com/your-username/finboard.git
+   git clone https://github.com/prakarti29prabhakar2005/finboard.git
    cd finboard
    ```
-
 2. **Install dependencies**:
    ```bash
    npm install
    ```
-
-3. **Run the development server**:
+3. **Run Locally**:
    ```bash
    npm run dev
    ```
-
-4. **Open the app**:
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
----
-
-## 📖 Usage Guide
-
-### Using Custom Formatting
-When adding or editing a widget, you can now select a **Value Format**:
-- **1,234**: Standard number formatting.
-- **$1,234**: Automatically adds USD currency formatting.
-- **12%**: Formats values as percentages.
-- **Abc**: Raw text display.
-
-### Drag-and-Drop
-Click the **Grip** icon on any widget header to move it. Use the **Settings** menu to expand widget width or height to fit your data.
-
-### templates
-Don't know where to start? Use the **Dashboard Settings** (Layout icon) to load a template like the "Crypto Market Starter".
+4. **Environment Variables**:
+   Create a `.env.local` if using private API keys (e.g., `NEXT_PUBLIC_ALPHAVANTAGE_KEY=your_key`). Note: The demo currently uses public Coingecko and Binance endpoints for easier testing.
 
 ---
 
-## 📁 Project Structure
+## ⚖️ Design Decisions
 
-- `src/app`: Application routing and global providers.
-- `src/components/dashboard`: Core dashboard layout and widget wrapping logic.
-- `src/components/widgets`: Individual components for Cards, Tables, and Charts.
-- `src/hooks`: Custom hooks for data fetching and web sockets.
-- `src/lib`: Logic for API fetching, JSON flattening, and value formatting.
-- `src/store`: Global state management for dashboard configuration.
-- `src/types`: TypeScript definitions.
+- **Why Zustand?**: Chosen for its minimal boilerplate compared to Redux, making it ideal for the highly interactive, client-side nature of a dashboard builder.
+- **Real-time Strategy**: Implemented a hybrid approach:
+    - **HTTP Polling**: For data that changes every 30-60s (e.g., Coingecko free tier).
+    - **WebSockets**: For high-frequency trading data where available (e.g., Binance).
+- **Rate Limit Handling**: Integrated TanStack Query's caching to prevent identical widgets from making redundant API calls. If a rate limit is hit, the UI gracefully displays the error while keeping cached data visible.
+
+---
+
+## ⚠️ Trade-offs & Limitations
+
+- **API Rate Limits**: Public APIs (like Coingecko) have strict limits. We handle this with aggressive caching but users may see error states if refreshing too often.
+- **Authentication**: To focus on the "Dashboard Builder" core, authentication is not implemented. Data is private to the user's browser (LocalStorage).
+- **Single-Page Scale**: Designed as a single-page dashboard; scaling to multiple "Boards" per user would require a database backend.
 
 ---
 
 ## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-**Built with ❤️ for the Advanced Agentic Coding Challenge.**
+MIT License. Created by [Prakarti Prabhakar].
