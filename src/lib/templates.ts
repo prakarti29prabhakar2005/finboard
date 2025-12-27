@@ -17,7 +17,7 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
         title: 'Bitcoin USD',
         apiEndpoint: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
         refreshInterval: 30,
-        dataConfig: { pathToData: 'bitcoin.usd' },
+        dataConfig: { pathToData: 'bitcoin.usd', valueFormat: 'currency' },
         layout: { w: 1, h: 1 }
       },
       {
@@ -25,7 +25,7 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
         title: 'Ethereum USD',
         apiEndpoint: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
         refreshInterval: 30,
-        dataConfig: { pathToData: 'ethereum.usd' },
+        dataConfig: { pathToData: 'ethereum.usd', valueFormat: 'currency' },
         layout: { w: 1, h: 1 }
       },
       {
@@ -38,10 +38,11 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
             fields: [
                 { key: 'image', label: 'Icon' },
                 { key: 'name', label: 'Name' },
-                { key: 'current_price', label: 'Price ($)' },
+                { key: 'current_price', label: 'Price' },
                 { key: 'market_cap', label: 'Market Cap' },
                 { key: 'price_change_percentage_24h', label: '24h %' }
-            ]
+            ],
+            valueFormat: 'number'
         },
         layout: { w: 4, h: 1 }
       }
@@ -56,7 +57,7 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
         title: 'IBM Corp',
         apiEndpoint: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo',
         refreshInterval: 60,
-        dataConfig: { pathToData: 'Global Quote.05. price' }, // AlphaVantage structure
+        dataConfig: { pathToData: 'Global Quote.05. price', valueFormat: 'currency' },
         layout: { w: 1, h: 1 }
       },
       {
@@ -64,7 +65,7 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
         title: 'Bitcoin (Comparison)',
         apiEndpoint: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
         refreshInterval: 30,
-        dataConfig: { pathToData: 'bitcoin.usd' },
+        dataConfig: { pathToData: 'bitcoin.usd', valueFormat: 'currency' },
         layout: { w: 1, h: 1 }
       },
       {
@@ -80,7 +81,8 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
                 { label: '24H', value: '1' },
                 { label: '7D', value: '7' },
                 { label: '30D', value: '30' }
-            ]
+            ],
+            valueFormat: 'currency'
         },
         layout: { w: 2, h: 1 }
       }
@@ -93,12 +95,12 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
       {
         type: 'card',
         title: 'BTC/USDT Live',
-        apiEndpoint: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT', // Fallback REST
+        apiEndpoint: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT',
         refreshInterval: 60,
-        dataConfig: { pathToData: 'price' }, 
+        dataConfig: { pathToData: 'price', valueFormat: 'currency' }, 
         wsConfig: {
             url: 'wss://stream.binance.com:9443/ws/btcusdt@trade',
-            transform: { valuePath: 'p' } // 'p' is price in Binance trade stream
+            transform: { valuePath: 'p' }
         },
         layout: { w: 2, h: 1 }
       }
@@ -110,7 +112,6 @@ export const getTemplateWidgets = (templateName: string): Widget[] => {
     const template = DASHBOARD_TEMPLATES.find(t => t.name === templateName);
     if (!template) return [];
     
-    // Assign fresh IDs to widget templates
     return template.widgets.map(w => ({
         ...w,
         id: generateId()

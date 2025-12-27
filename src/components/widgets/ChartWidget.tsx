@@ -3,7 +3,9 @@
 import { useMemo } from 'react';
 import { Widget } from '@/types';
 import { Loader2 } from 'lucide-react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line } from 'recharts';
+import { formatValue } from '@/lib/utils';
+
 interface ChartWidgetProps {
   widget: Widget;
   data: any;
@@ -73,6 +75,7 @@ export function ChartWidget({ widget, data, isLoading, error, dataUpdatedAt }: C
             <Tooltip
               contentStyle={{ backgroundColor: "#0f172a", borderColor: "#1f2937", color: "#f3f4f6" }}
               itemStyle={{ color: "#10b981" }}
+              formatter={(val: any) => [formatValue(val, widget.dataConfig.valueFormat), widget.dataConfig.labelField || 'Value']}
             />
             <Line type="monotone" dataKey={yKey} stroke="#10b981" fillOpacity={1} fill="url(#colorValue)" />
           </LineChart>
@@ -93,6 +96,7 @@ export function ChartWidget({ widget, data, isLoading, error, dataUpdatedAt }: C
             <Tooltip
               contentStyle={{ backgroundColor: "#0f172a", borderColor: "#1f2937", color: "#f3f4f6" }}
               itemStyle={{ color: "#10b981" }}
+              formatter={(val: any) => [formatValue(val, widget.dataConfig.valueFormat), 'Value']}
             />
             <Area type="monotone" dataKey={yKey} stroke="#10b981" fillOpacity={1} fill="url(#colorValue)" />
           </AreaChart>
@@ -113,6 +117,7 @@ export function ChartWidget({ widget, data, isLoading, error, dataUpdatedAt }: C
             <Tooltip
               contentStyle={{ backgroundColor: "#0f172a", borderColor: "#1f2937", color: "#f3f4f6" }}
               itemStyle={{ color: "#10b981" }}
+              formatter={(val: any) => [formatValue(val, widget.dataConfig.valueFormat), 'Value']}
             />
             <Area type="monotone" dataKey={yKey} stroke="#10b981" fillOpacity={1} fill="url(#colorValue)" />
           </AreaChart>

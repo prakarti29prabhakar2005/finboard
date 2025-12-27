@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 FinBoard: Customizable Finance Dashboard
 
-## Getting Started
+FinBoard is a powerful, real-time finance monitoring dashboard built with **Next.js 14**. It allows users to connect to any financial API, explore JSON responses dynamically, and build a personalized monitoring suite with customizable widgets.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **🚀 Dynamic API Integration**: Connect to any REST API (Alpha Vantage, CoinGecko, Binance, etc.).
+- **🔍 JSON Explorer**: Interactive field selection—no more guessing JSON paths.
+- **📈 Advanced Visualization**: 
+    - **Finance Cards**: Single-metric monitoring with custom formatting.
+    - **Tables**: Searchable, sortable, and paginated data grids.
+    - **Charts**: Responsive Area and Line charts with dynamic time-range switching (`24H`, `7D`, `30D`).
+- **🔗 Real-time Data**: Support for WebSocket streams (e.g., Binance Live Ticker) with automatic fallback.
+- **🎛️ Dashboard Builder**: 
+    - **Drag-and-Drop**: Pixel-perfect layout control.
+    - **Live Editing**: Change URLs, intervals, and formats on the fly.
+    - **Templates**: Instant starter layouts for Crypto and Stocks.
+- **🌓 Modern UI/UX**: 
+    - Beautiful **Dark/Light** mode.
+    - Glassmorphism design aesthetics.
+    - Skeleton loaders and error boundaries for a robust experience.
+- **💾 Data Persistence**: Full dashboard state saved to local storage. Import/Export support for configuration backups.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, Server-side Rendering)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Data Fetching**: [TanStack Query v5](https://tanstack.com/query)
+- **Layout Engine**: [DND Kit](https://dndkit.com/) / [React Grid Layout](https://github.com/react-grid-layout/react-grid-layout)
+- **Charts**: [Recharts](https://recharts.org/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Node.js 18.x or higher
+- npm or yarn
 
-## Deploy on Vercel
+### Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/finboard.git
+   cd finboard
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Open the app**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📖 Usage Guide
+
+### Using Custom Formatting
+When adding or editing a widget, you can now select a **Value Format**:
+- **1,234**: Standard number formatting.
+- **$1,234**: Automatically adds USD currency formatting.
+- **12%**: Formats values as percentages.
+- **Abc**: Raw text display.
+
+### Drag-and-Drop
+Click the **Grip** icon on any widget header to move it. Use the **Settings** menu to expand widget width or height to fit your data.
+
+### templates
+Don't know where to start? Use the **Dashboard Settings** (Layout icon) to load a template like the "Crypto Market Starter".
+
+---
+
+## 📁 Project Structure
+
+- `src/app`: Application routing and global providers.
+- `src/components/dashboard`: Core dashboard layout and widget wrapping logic.
+- `src/components/widgets`: Individual components for Cards, Tables, and Charts.
+- `src/hooks`: Custom hooks for data fetching and web sockets.
+- `src/lib`: Logic for API fetching, JSON flattening, and value formatting.
+- `src/store`: Global state management for dashboard configuration.
+- `src/types`: TypeScript definitions.
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+**Built with ❤️ for the Advanced Agentic Coding Challenge.**

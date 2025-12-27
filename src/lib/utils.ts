@@ -75,3 +75,32 @@ export function flattenObject(obj: any, prefix = '', res: FlattenedField[] = [])
   });
   return res;
 }
+
+export function formatValue(value: any, format?: 'number' | 'currency' | 'percentage' | 'text') {
+  if (value === undefined || value === null) return '-';
+  if (typeof value === 'object') return '...';
+
+  const num = Number(value);
+  const isNumeric = !isNaN(num) && typeof value !== 'boolean';
+
+  if (!isNumeric || format === 'text') return String(value);
+
+  switch (format) {
+    case 'currency':
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(num);
+    case 'percentage':
+      return new Intl.NumberFormat('en-US', {
+        style: 'percent',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(num / 100);
+    case 'number':
+    default:
+      return new Intl.NumberFormat('en-US').format(num);
+  }
+}

@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { WidgetType, WidgetDataConfig } from '@/types';
+import { WidgetType, WidgetDataConfig, ValueFormat } from '@/types';
 import { useDashboardStore } from '@/store/useDashboardStore';
 import { fetchWidgetData } from '@/lib/api';
 import { Loader2, AlertCircle, LayoutGrid, Table as TableIcon, LineChart, Search, Eye, Plus, X } from 'lucide-react';
@@ -29,6 +29,8 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
   const [url, setUrl] = useState('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
   const [interval, setInterval] = useState(30);
   const [type, setType] = useState<WidgetType>('card');
+  const [format, setFormat] = useState<ValueFormat>('number');
+
   
   // Advanced Selection State
   const [fieldSearch, setFieldSearch] = useState('');
@@ -58,12 +60,37 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
     }
   };
 
+  // Sync state if editing
+  useMemo(() => {
+    if (editingWidget && isOpen) {
+      setName(editingWidget.title);
+      setUrl(editingWidget.apiEndpoint);
+      setInterval(editingWidget.refreshInterval);
+      setType(editingWidget.type);
+      setSelectedPath(editingWidget.dataConfig.pathToData);
+      setSelectedTableFields(editingWidget.dataConfig.fields?.map(f => f.key) || []);
+      setFormat(editingWidget.dataConfig.valueFormat || 'number');
+    } else if (!editingWidget && isOpen) {
+        // Reset to defaults if opening fresh
+        setName('New Widget');
+        setUrl('');
+        setInterval(30);
+        setType('card');
+        setSelectedPath('');
+        setSelectedTableFields([]);
+        setFormat('number');
+        setFetchedData(null);
+        setError(null);
+    }
+  }, [editingWidget, isOpen]);
+
   const handleSave = () => {
     // Determine config based on type
     const config: WidgetDataConfig = {
         pathToData: selectedPath,
         fields: type === 'table' ? selectedTableFields.map(f => ({ key: f, label: f.split('.').pop() || f })) : undefined,
-        limit: (editingWidget?.dataConfig?.limit) || undefined // Persist limit if exists
+        limit: (editingWidget?.dataConfig?.limit) || undefined,
+        valueFormat: format
     };
 
     if (editingWidget) {
@@ -200,6 +227,32 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
                                 )}
                             >
                                 <mode.icon size={14} /> {mode.label}
+                            </button>
+                        ))}
+                     </div>
+                </div>
+
+                {/* Value Formatting */}
+                <div>
+                     <p className="text-gray-500 text-xs mb-2">Value Formatting</p>
+                     <div className="flex flex-wrap gap-2 p-1 bg-gray-900/50 rounded-lg border border-gray-800 w-fit">
+                        {[
+                            { id: 'number', label: '1,234' },
+                            { id: 'currency', label: '$1,234' },
+                            { id: 'percentage', label: '12%' },
+                            { id: 'text', label: 'Abc' }
+                        ].map((f) => (
+                            <button
+                                key={f.id}
+                                onClick={() => setFormat(f.id as ValueFormat)}
+                                className={cn(
+                                    "px-3 py-1.5 rounded-md text-[10px] font-medium transition-all",
+                                    format === f.id 
+                                        ? "bg-blue-600 text-white shadow-lg shadow-blue-900/20" 
+                                        : "text-gray-400 hover:text-white hover:bg-gray-800"
+                                )}
+                            >
+                                {f.label}
                             </button>
                         ))}
                      </div>

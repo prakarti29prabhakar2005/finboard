@@ -3,6 +3,7 @@ import { Widget } from '@/types';
 import { Loader2, ArrowUpDown, Search, Settings2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useDashboardStore } from '@/store/useDashboardStore';
+import { formatValue } from '@/lib/utils';
 
 interface WidgetProps {
   widget: Widget;
@@ -135,7 +136,7 @@ export function TableWidget({ widget, data, isLoading, error, dataUpdatedAt }: W
                             if (typeof val === 'string' && (val.startsWith('http') && (val.includes('.png') || val.includes('.jpg') || val.includes('.jpeg')))) {
                                 return <img src={val} alt={h.label} className="h-6 w-6 rounded-full" />;
                             }
-                            return typeof val === 'object' ? '...' : val;
+                            return formatValue(val, widget.dataConfig.valueFormat);
                         })()}
                     </td>
                   ))}

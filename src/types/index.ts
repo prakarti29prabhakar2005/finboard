@@ -1,4 +1,6 @@
 export type WidgetType = 'card' | 'table' | 'chart';
+export type ValueFormat = 'number' | 'currency' | 'percentage' | 'text';
+
 
 export interface APIConfig {
   endpoint: string;
@@ -18,6 +20,7 @@ export interface WidgetDataConfig {
   limit?: number; // For tables, max rows
   ranges?: { label: string; value: string }[]; // For chart intervals (e.g. [{label: '1D', value: '1'}])
   chartType?: 'area' | 'line' | 'candle'; // Desired chart style
+  valueFormat?: ValueFormat; // Formatting for values
 }
 
 // ---------------------------------------------------------------------------

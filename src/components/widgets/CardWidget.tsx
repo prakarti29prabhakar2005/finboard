@@ -1,6 +1,6 @@
-import { useWidgetData } from '@/hooks/useWidgetData';
 import { Widget } from '@/types';
 import { Loader2 } from 'lucide-react';
+import { formatValue } from '@/lib/utils';
 
 interface WidgetProps {
   widget: Widget;
@@ -27,7 +27,7 @@ export function CardWidget({ widget, data, isLoading, error, dataUpdatedAt }: Wi
   return (
     <div className="flex h-full flex-col items-center justify-center p-4">
       <div className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
-        {typeof displayValue === 'number' ? displayValue.toLocaleString() : displayValue}
+        {formatValue(data, widget.dataConfig.valueFormat)}
       </div>
       <p className="text-gray-500 dark:text-gray-400 text-sm mt-2 font-medium">
         {widget.dataConfig.labelField || 'Latest Value'}
