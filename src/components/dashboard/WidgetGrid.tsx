@@ -43,20 +43,20 @@ export function WidgetGrid({ onAddClick }: WidgetGridProps) {
   if(!widgets.length) {
       return (
           <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-in fade-in zoom-in duration-500">
-              <div className="h-16 w-16 bg-gray-900 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-gray-950/50">
+              <div className="h-16 w-16 bg-gray-100 dark:bg-gray-900 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-gray-200 dark:shadow-gray-950/50">
                 <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
               </div>
-              <h2 className="text-xl font-medium text-gray-200 mb-2">Build Your Finance Dashboard</h2>
-              <p className="text-gray-500 max-w-md mb-8">Create custom widgets by connecting to any finance API. Track stocks, crypto, forex, or economic indicators - all in real-time.</p>
+              <h2 className="text-xl font-medium text-gray-900 dark:text-gray-200 mb-2">Build Your Finance Dashboard</h2>
+              <p className="text-gray-600 dark:text-gray-500 max-w-md mb-8">Create custom widgets by connecting to any finance API. Track stocks, crypto, forex, or economic indicators - all in real-time.</p>
               
               <button 
                 onClick={onAddClick}
-                className="group relative flex flex-col items-center justify-center w-full max-w-xs h-32 rounded-xl border-2 border-dashed border-gray-800 bg-gray-900/30 hover:bg-gray-900/50 hover:border-emerald-500/50 transition-all duration-300"
+                className="group relative flex flex-col items-center justify-center w-full max-w-xs h-32 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/30 hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:border-emerald-500/50 transition-all duration-300"
               >
-                 <div className="h-10 w-10 rounded-full bg-gray-800 group-hover:bg-emerald-600/20 flex items-center justify-center mb-2 transition-colors">
-                    <Plus size={20} className="text-gray-400 group-hover:text-emerald-500" />
+                 <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-800 group-hover:bg-emerald-600/20 flex items-center justify-center mb-2 transition-colors">
+                    <Plus size={20} className="text-gray-600 dark:text-gray-400 group-hover:text-emerald-500" />
                  </div>
-                 <span className="text-sm font-medium text-gray-400 group-hover:text-emerald-400">Create your first widget</span>
+                 <span className="text-sm font-medium text-gray-900 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">Create your first widget</span>
               </button>
           </div>
       )
