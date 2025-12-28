@@ -4,7 +4,7 @@ FinBoard is a high-performance, real-time finance monitoring dashboard built wit
 
 ## 🔗 Project Links
 - [**Live Demo**](https://finboard-ochre-mu.vercel.app/)
-- **Video Walkthrough**: [https://drive.google.com/file/d/1sS5uDomUPWZPp-BZkEmRm2ggQS8M3G4E/view?usp=sharing](https://drive.google.com/file/d/1sS5uDomUPWZPp-BZkEmRm2ggQS8M3G4E/view?usp=sharing)
+- [**Video Walkthrough**](https://drive.google.com/file/d/1sS5uDomUPWZPp-BZkEmRm2ggQS8M3G4E/view?usp=sharing)
 
 ---
 
