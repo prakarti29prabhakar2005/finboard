@@ -76,7 +76,7 @@ export function DashboardControls({ isOpen, onClose }: DashboardControlsProps) {
                             <button
                                 key={template.name}
                                 onClick={() => handleLoadTemplate(template.name)}
-                                className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group"
+                                className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group"
                             >
                                 <div className="mt-1 p-1.5 bg-emerald-100 dark:bg-emerald-900/30 rounded text-emerald-600 dark:text-emerald-400">
                                     <Layout size={16} />
@@ -85,7 +85,7 @@ export function DashboardControls({ isOpen, onClose }: DashboardControlsProps) {
                                     <div className="font-medium text-gray-900 dark:text-gray-100 text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                                         {template.name}
                                     </div>
-                                    <div className="text-xs text-gray-500">
+                                    <div className="text-xs text-gray-600 dark:text-gray-400">
                                         {template.description}
                                     </div>
                                 </div>
@@ -100,10 +100,10 @@ export function DashboardControls({ isOpen, onClose }: DashboardControlsProps) {
                 <div>
                     <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Data Management</h3>
                     <div className="flex gap-3">
-                        <Button variant="outline" onClick={handleExport} className="flex-1 gap-2 border-gray-200 dark:border-gray-800">
+                        <Button variant="outline" onClick={handleExport} className="flex-1 gap-2 border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300">
                             <Download size={16} /> Export JSON
                         </Button>
-                        <Button variant="outline" onClick={handleImportClick} className="flex-1 gap-2 border-gray-200 dark:border-gray-800">
+                        <Button variant="outline" onClick={handleImportClick} className="flex-1 gap-2 border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300">
                             <Upload size={16} /> Import JSON
                         </Button>
                         <input 
@@ -119,7 +119,7 @@ export function DashboardControls({ isOpen, onClose }: DashboardControlsProps) {
                             <AlertCircle size={12} /> {importError}
                         </div>
                     )}
-                    <p className="mt-2 text-[10px] text-gray-400 text-center">
+                    <p className="mt-2 text-[10px] text-gray-500 dark:text-gray-400 text-center">
                         Save your layout to a file or restore from a backup.
                     </p>
                 </div>
