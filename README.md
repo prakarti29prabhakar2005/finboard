@@ -3,7 +3,7 @@
 FinBoard is a high-performance, real-time finance monitoring dashboard built with **Next.js 14**. It empowers users to build their own monitoring suite by connecting to any financial API and visualizing data through dynamic, customizable widgets.
 
 ## 🔗 Project Links
-- **Live Demo**: [Live Demo](https://finboard-ochre-mu.vercel.app/)
+- [**Live Demo**](https://finboard-ochre-mu.vercel.app/)
 - **Video Walkthrough**: [https://drive.google.com/file/d/1sS5uDomUPWZPp-BZkEmRm2ggQS8M3G4E/view?usp=sharing](https://drive.google.com/file/d/1sS5uDomUPWZPp-BZkEmRm2ggQS8M3G4E/view?usp=sharing)
 
 ---
