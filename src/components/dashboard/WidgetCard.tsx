@@ -16,21 +16,10 @@ interface WidgetCardProps {
 
 export function WidgetCard({ widget, dragHandleProps }: WidgetCardProps) {
   const { removeWidget, updateWidget, setEditingWidget } = useDashboardStore();
-  // State for dynamic URL replacement (Time Ranges)
-  const defaultRange = widget.dataConfig.ranges?.[0]?.value || '';
-  const [activeRange, setActiveRange] = useState(defaultRange);
   const [showSettings, setShowSettings] = useState(false); // Settings dropdown visibility
 
-  // Construct dynamic URL if ranges are used
-  const dynamicUrl = useMemo(() => {
-     if (activeRange && widget.apiEndpoint.includes('{RANGE}')) {
-         return widget.apiEndpoint.replace('{RANGE}', activeRange);
-     }
-     return widget.apiEndpoint; // fallback
-  }, [widget.apiEndpoint, activeRange]);
-
   // Lifted data fetching
-  const { data, isLoading, error, refetch, isRefetching, dataUpdatedAt } = useWidgetData(widget, dynamicUrl);
+  const { data, isLoading, error, refetch, isRefetching, dataUpdatedAt } = useWidgetData(widget, widget.apiEndpoint);
 
   // Remove live indicator (isLive) as it's not provided by hook
   const isLive = false; // Placeholder live indicator
@@ -78,25 +67,6 @@ export function WidgetCard({ widget, dragHandleProps }: WidgetCardProps) {
             )}
         </div>
         <div className="flex items-center gap-1 relative">
-             {/* Time Range Selector */}
-             {widget.dataConfig.ranges && widget.dataConfig.ranges.length > 0 && (
-                 <div className="flex bg-gray-100 dark:bg-gray-800 rounded-md p-0.5 mr-2">
-                     {widget.dataConfig.ranges.map(range => (
-                         <button
-                            key={range.value}
-                            onClick={() => setActiveRange(range.value)}
-                            className={cn(
-                                "text-[10px] px-2 py-0.5 rounded-sm font-medium transition-all",
-                                activeRange === range.value 
-                                    ? "bg-white dark:bg-gray-700 text-emerald-600 dark:text-emerald-400 shadow-sm" 
-                                    : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
-                            )}
-                         >
-                             {range.label}
-                         </button>
-                     ))}
-                 </div>
-             )}
 
              <Button 
                 variant="ghost" 

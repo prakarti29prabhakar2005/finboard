@@ -71,17 +71,12 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
       {
         type: 'chart',
         title: 'Bitcoin Trend',
-        apiEndpoint: 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days={RANGE}', 
+        apiEndpoint: 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30', 
         refreshInterval: 300,
         dataConfig: { 
             pathToData: 'prices', 
             labelField: '0', 
             valueField: '1',
-            ranges: [
-                { label: '24H', value: '1' },
-                { label: '7D', value: '7' },
-                { label: '30D', value: '30' }
-            ],
             valueFormat: 'currency'
         },
         layout: { w: 2, h: 1 }

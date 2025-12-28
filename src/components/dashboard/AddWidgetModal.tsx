@@ -23,6 +23,9 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
   const [error, setError] = useState<string | null>(null);
   const [fetchedData, setFetchedData] = useState<any>(null);
   const [flattenedFields, setFlattenedFields] = useState<FlattenedField[]>([]);
+  
+  // Chart Specific State
+  const [chartType, setChartType] = useState<'area' | 'line' | 'candle'>('area');
 
   // Form State
   const [name, setName] = useState('Bitcoin');
@@ -30,6 +33,7 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
   const [interval, setInterval] = useState(30);
   const [type, setType] = useState<WidgetType>('card');
   const [format, setFormat] = useState<ValueFormat>('number');
+  const [chartTypeInternal, setChartTypeInternal] = useState<'area' | 'line' | 'candle'>('area');
 
   
   // Advanced Selection State
@@ -81,8 +85,13 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
         setFormat('number');
         setFetchedData(null);
         setError(null);
+        setChartType('area');
     }
   }, [editingWidget, isOpen]);
+
+  const handleTypeChange = (newType: WidgetType) => {
+      setType(newType);
+  };
 
   const handleSave = () => {
     // Determine config based on type
@@ -90,7 +99,8 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
         pathToData: selectedPath,
         fields: type === 'table' ? selectedTableFields.map(f => ({ key: f, label: f.split('.').pop() || f })) : undefined,
         limit: (editingWidget?.dataConfig?.limit) || undefined,
-        valueFormat: format
+        valueFormat: format,
+        chartType: type === 'chart' ? chartType : undefined
     };
 
     if (editingWidget) {
@@ -218,7 +228,7 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
                         ].map((mode) => (
                             <button
                                 key={mode.id}
-                                onClick={() => setType(mode.id as WidgetType)}
+                                onClick={() => handleTypeChange(mode.id as WidgetType)}
                                 className={cn(
                                     "flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all",
                                     type === mode.id 
@@ -257,6 +267,31 @@ export function AddWidgetModal({ isOpen, onClose }: AddWidgetModalProps) {
                         ))}
                      </div>
                 </div>
+
+                {/* Chart Settings (Conditional) */}
+                {type === 'chart' && (
+                    <div className="space-y-4 p-3 bg-gray-950/20 border border-gray-800 rounded-lg animate-in slide-in-from-top-2">
+                        <div>
+                            <p className="text-gray-500 text-[10px] uppercase font-bold mb-2 tracking-wider">Chart Style</p>
+                            <div className="flex gap-2">
+                                {['area', 'line', 'candle'].map((style) => (
+                                    <button
+                                        key={style}
+                                        onClick={() => setChartType(style as any)}
+                                        className={cn(
+                                            "capitalize px-3 py-1 rounded border text-[10px] font-medium transition-all",
+                                            chartType === style 
+                                                ? "bg-emerald-600/20 border-emerald-500 text-emerald-400" 
+                                                : "border-gray-800 text-gray-500 hover:border-gray-700"
+                                        )}
+                                    >
+                                        {style}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {fetchedData && (
                 <>
